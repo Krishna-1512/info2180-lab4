@@ -1,10 +1,21 @@
-window.addEventListener('load', function() {
-    let findBtn = document.getElementById('btn');
-
-    findBtn.addEventListener('click', function(element) {
+window.onload = mystarter;
+function mystarter(){
+    let searchbtn = document.getElementById('btn');
+    var mynote;
+    searchbtn.addEventListener('click', async function(element) {
         element.preventDefault();
+        var hero_form = document.getElementById("superhero").value;
+        var heroname = document.getElementsByClassName("heroname")[0]; 
+        var alias = document.getElementsByClassName("alias")[0]; 
+        var biography = document.getElementsByClassName("biography")[0];  
 
-        fetch("superheroes.php")
+        console.log(typeof(heroname));
+        console.log(typeof(alias));
+        console.log(typeof(biography));
+        if (hero_form === ''){
+            //do
+            console.log("This is 1");
+            fetch("superheroes.php")
             .then(response => {
                 if (response.ok) {
                     return response.text()
@@ -13,9 +24,40 @@ window.addEventListener('load', function() {
                 }
             })
             .then(data => {
-                let quote = document.querySelector('#quote');
-                alert(`Superheroes list \n ${data}`);
+                heroname.innerHTML = data;
+                //alert(`Superheroes List \n ${data}`);
             })
             .catch(error => console.log('There was an error: ' + error));
+        }else{
+            //do
+            console.log("This is 2");
+            
+            fetch("superheroes.php", {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(hero_form)
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text()
+                } else {
+                    return Promise.reject('something went wrong!')
+                }
+            })
+            .then(data => {
+                console.log(data);
+                var hero = JSON.parse(data);
+                console.log(hero);
+                var hname = hero["name"];
+                var aname = "A.K.A  " + hero["alias"];
+                var bio = hero["biography"];
+                console.log(hname);
+                console.log(aname);
+                console.log(bio);
+                heroname.innerHTML = hname ;
+                alias.innerHTML = aname;
+                biography.innerHTML = bio;
+            });
+        }     
     });
-});
+}

@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET'){
     if (!$test){
         echo json_encode($data);
     }else{
-        echo "Hero Not Found";
+        echo "Hero Not Located";
     }
     
 }

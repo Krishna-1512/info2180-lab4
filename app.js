@@ -14,13 +14,13 @@ function mystarter(){
         console.log(typeof(biography));
         if (hero_form === ''){
             //do
-            console.log("This is 1");
+            console.log("Error 1!!");
             fetch("superheroes.php")
             .then(response => {
                 if (response.ok) {
                     return response.text()
                 } else {
-                    return Promise.reject('something went wrong!')
+                    return Promise.reject('something bad!')
                 }
             })
             .then(data => {
@@ -30,7 +30,7 @@ function mystarter(){
             .catch(error => console.log('There was an error: ' + error));
         }else{
             //do
-            console.log("This is 2");
+            console.log("Error 2!");
             
             fetch("superheroes.php", {
                 method: 'POST',
@@ -41,7 +41,7 @@ function mystarter(){
                 if (response.ok) {
                     return response.text()
                 } else {
-                    return Promise.reject('something went wrong!')
+                    return Promise.reject('something is not right!')
                 }
             })
             .then(data => {

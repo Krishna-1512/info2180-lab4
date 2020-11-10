@@ -8,29 +8,33 @@ function mystarter(){
         var heroname = document.getElementsByClassName("heroname")[0]; 
         var alias = document.getElementsByClassName("alias")[0]; 
         var biography = document.getElementsByClassName("biography")[0];  
+        var message = document.getElementsByClassName("message")[0];
 
         console.log(typeof(heroname));
         console.log(typeof(alias));
         console.log(typeof(biography));
         if (hero_form === ''){
             //do
-            console.log("Error 1!!");
+            console.log("This is 1");
             fetch("superheroes.php")
             .then(response => {
                 if (response.ok) {
                     return response.text()
                 } else {
-                    return Promise.reject('something bad!')
+                    return Promise.reject('something went wrong!')
                 }
             })
             .then(data => {
-                heroname.innerHTML = data;
+                message.innerHTML = data;
+                heroname.innerHTML = "";
+                alias.innerHTML = "";
+                biography.innerHTML = "";
                 //alert(`Superheroes List \n ${data}`);
             })
             .catch(error => console.log('There was an error: ' + error));
         }else{
             //do
-            console.log("Error 2!");
+            console.log("This is 2");
             
             fetch("superheroes.php", {
                 method: 'POST',
@@ -41,23 +45,31 @@ function mystarter(){
                 if (response.ok) {
                     return response.text()
                 } else {
-                    return Promise.reject('something is not right!')
+                    return Promise.reject('something went wrong!')
                 }
             })
             .then(data => {
                 console.log(data);
                 var hero = JSON.parse(data);
                 console.log(hero);
-                var hname = hero["name"];
-                var aname = "A.K.A  " + hero["alias"];
-                var bio = hero["biography"];
-                console.log(hname);
-                console.log(aname);
-                console.log(bio);
-                heroname.innerHTML = hname ;
-                alias.innerHTML = aname;
-                biography.innerHTML = bio;
+                var hrname = hero["name"];
+                var shalias = "A.K.A  " + hero["alias"];
+                var biog = hero["biography"];
+                console.log(hrname);
+                console.log(shalias);
+                console.log(biog);
+                message.innerHTML = "";
+                heroname.innerHTML = hrname;
+                alias.innerHTML = shalias;
+                biography.innerHTML = biog;
             });
         }     
     });
 }
+
+
+
+
+
+
+

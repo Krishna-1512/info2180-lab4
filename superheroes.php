@@ -1,5 +1,6 @@
 <?php
 
+$data = [];
 $superheroes = [
   [
       "id" => 1,
@@ -63,7 +64,6 @@ $superheroes = [
   ], 
 ];
 
-
 $data = json_encode($superheroes);
 if ($_SERVER['REQUEST_METHOD'] == 'GET'){
     $line = '';
@@ -75,8 +75,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET'){
     echo $line;
 }elseif ($_SERVER['REQUEST_METHOD'] == 'POST'){
     //print("I am here");
-    $mymsg = json_decode(file_get_contents('php://input'), true);
-    $formdata = filter_var($mymsg, FILTER_SANITIZE_STRING);
+    $ogmsg = json_decode(file_get_contents('php://input'), true);
+    $formdata = filter_var($ogmsg, FILTER_SANITIZE_STRING);
     $test = true;
     foreach ($superheroes as $superhero):
         if(strtolower($formdata) == strtolower($superhero['name']) || strtolower($formdata) == strtolower($superhero['alias'])){
@@ -88,10 +88,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET'){
     if (!$test){
         echo json_encode($data);
     }else{
-        echo "Hero Not Located";
+        echo "Hero Not Found";
     }
     
 }
 
 
 ?>
+
+
